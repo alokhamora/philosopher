@@ -6,7 +6,7 @@
 /*   By: mchaya <mchaya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/22 11:09:12 by mchaya            #+#    #+#             */
-/*   Updated: 2021/05/10 14:52:42 by mchaya           ###   ########.fr       */
+/*   Updated: 2021/05/11 16:49:24 by mchaya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,9 @@ void	philo_eat(t_life *tmp)
 
 void	*life_philo(void *life)
 {
-	t_life			*tmp;
-	pthread_t		pthread;
-	int				k;
+	t_life		*tmp;
+	pthread_t	pthread;
+	int			k;
 
 	k = 0;
 	tmp = life;
@@ -116,7 +116,7 @@ int	main(int argc, char **argv)
 
 	phil = malloc(sizeof(t_philo));
 	if (init_argv(phil, argv, argc) < 0)
-		return (exit_err("Error: wrong argument"));
+		return (exit_err("Error: wrong argument\n"));
 	phil->t = current_time();
 	life = malloc(sizeof(t_life) * phil->num);
 	death = malloc(sizeof(pthread_mutex_t));

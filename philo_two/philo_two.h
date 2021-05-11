@@ -6,7 +6,7 @@
 /*   By: mchaya <mchaya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 14:40:53 by mchaya            #+#    #+#             */
-/*   Updated: 2021/05/10 15:28:55 by mchaya           ###   ########.fr       */
+/*   Updated: 2021/05/11 17:46:45 by mchaya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <sys/time.h>
+# include <semaphore.h>
 
 typedef struct s_philo
 {
@@ -33,18 +34,16 @@ typedef struct s_life
 {
 	int				id;
 	t_philo			*philo;
-	sem_t			*pfork;
 	unsigned long	last;
-	sem_t			*death;
-	sem_t			eat;
-	sem_t			*text;
+	sem_t		*pfork;
+	sem_t		*death;
+	sem_t		*eat;
+	sem_t		*text;
 }				t_life;
 
 int				ft_strlen(const char *s);
 int				str_to_int(char *str);
-void			init_life(t_life *life, t_philo *phil, pthread_mutex_t *death,
-						  pthread_mutex_t *text);
-int				free_all(t_life *life);
+//int				free_all(t_life *life);
 int				init_argv(t_philo *phil, char **argv, int argc);
 unsigned long	current_time(void);
 void			ft_usleep(unsigned long i);
