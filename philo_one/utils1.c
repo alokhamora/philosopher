@@ -6,7 +6,7 @@
 /*   By: mchaya <mchaya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 13:28:25 by mchaya            #+#    #+#             */
-/*   Updated: 2021/05/10 14:52:42 by mchaya           ###   ########.fr       */
+/*   Updated: 2021/05/12 16:05:08 by mchaya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,17 @@ int	ft_strlen(const char *s)
 
 int	free_all(t_life *life)
 {
+	int i;
+
+	i = 0;
 	pthread_mutex_destroy(life->text);
 	pthread_mutex_destroy(life->death);
 	pthread_mutex_destroy(life->pfork);
-	pthread_mutex_destroy(&life->eat);
+	while(i < life->philo->num)
+	{
+		pthread_mutex_destroy(&(life[i]).eat);
+		i++;
+	}
 	free(life->philo);
 	free(life);
 	return (0);
