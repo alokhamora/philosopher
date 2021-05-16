@@ -22,16 +22,6 @@ int	ft_strlen(const char *s)
 	return (i);
 }
 
-int	free_all(t_life *life)
-{
-	sem_close(life->pfork);
-	sem_close(life->text);
-	sem_close(life->death);
-	free(life->philo);
-	free(life);
-	return (0);
-}
-
 void	init_life(t_life *life, t_philo *phil)
 {
 	sem_t	*pfork;

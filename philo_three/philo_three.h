@@ -19,6 +19,7 @@
 # include <stdlib.h>
 # include <sys/time.h>
 # include <semaphore.h>
+# include <signal.h>
 
 typedef struct s_philo
 {
@@ -33,6 +34,7 @@ typedef struct s_philo
 typedef struct s_life
 {
 	int				id;
+	pid_t			pid;
 	t_philo			*philo;
 	unsigned long	last;
 	sem_t			*pfork;
