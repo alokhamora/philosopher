@@ -6,7 +6,7 @@
 /*   By: mchaya <mchaya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/12 18:19:38 by mchaya            #+#    #+#             */
-/*   Updated: 2021/05/16 12:08:51 by mchaya           ###   ########.fr       */
+/*   Updated: 2021/05/16 12:23:34 by mchaya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,9 @@ int	main(int argc, char **argv)
 		kill(life[i].pid, 9);
 		i++;
 	}
+	sem_unlink("death");
+	sem_unlink("text");
+	sem_unlink("fork");
 	free(phil);
 	free(life);
 	return (0);

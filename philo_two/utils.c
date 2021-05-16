@@ -6,7 +6,7 @@
 /*   By: mchaya <mchaya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/07 17:29:41 by mchaya            #+#    #+#             */
-/*   Updated: 2021/05/10 14:52:42 by mchaya           ###   ########.fr       */
+/*   Updated: 2021/05/16 15:34:10 by mchaya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	init_argv(t_philo *phil, char **argv, int argc)
 	else
 		phil->times = str_to_int(argv[5]);
 	phil->num = str_to_int(argv[1]);
-	phil->die = (unsigned long)str_to_int(argv[2]);
+	phil->die = str_to_int(argv[2]);
 	phil->eat = str_to_int(argv[3]);
 	phil->sleep = str_to_int(argv[4]);
 	if (phil->num < 2 || phil->sleep <= 0 || phil->eat <= 0 || phil->die

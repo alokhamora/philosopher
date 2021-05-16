@@ -6,7 +6,7 @@
 /*   By: mchaya <mchaya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 14:41:32 by mchaya            #+#    #+#             */
-/*   Updated: 2021/05/16 12:08:51 by mchaya           ###   ########.fr       */
+/*   Updated: 2021/05/16 15:36:00 by mchaya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	*check_death(void *tmp)
 	while (1)
 	{
 		usleep(1000);
-		if (current_time() - life->last >= (unsigned int)life->philo->die)
+		if (current_time() - life->last >= life->philo->die)
 		{
 			sem_wait(life->text);
 			printf("%ld %d died\n", current_time() - life->philo->t, life->id);
@@ -69,7 +69,7 @@ void	*life_philo(void *life)
 		if (tmp->philo->times != -1 && k == tmp->philo->times)
 		{
 			sem_post(tmp->death);
-			return NULL;
+			//return NULL;
 		}
 		if (tmp->philo->times != -1)
 			k++;
@@ -113,6 +113,9 @@ int	main(int argc, char **argv)
 	init_life(life, phil);
 	exec_philo(life);
 	sem_wait(life->death);
+	sem_unlink("death");
+	sem_unlink("text");
+	sem_unlink("fork");
 	free(phil);
 	free(life);
 	return (0);
