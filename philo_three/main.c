@@ -6,7 +6,7 @@
 /*   By: mchaya <mchaya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/12 18:19:38 by mchaya            #+#    #+#             */
-/*   Updated: 2021/05/12 18:59:56 by mchaya           ###   ########.fr       */
+/*   Updated: 2021/05/16 12:08:51 by mchaya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	*check_death(void *tmp)
 	while (1)
 	{
 		usleep(1000);
-		if (current_time() - life->last >= life->philo->die)
+		if (current_time() - life->last >= (unsigned int)life->philo->die)
 		{
 			sem_wait(life->text);
 			printf("%ld %d died\n", current_time() - life->philo->t, life->id);
@@ -52,14 +52,12 @@ void	philo_eat(t_life *tmp)
 	sem_post(tmp->pfork);
 }
 
-void	*life_philo(t_life *tmp)
+void	life_philo(t_life *tmp)
 {
-	//t_life		*tmp;
 	pthread_t	pthread;
 	int			k;
 
 	k = 0;
-	//tmp = life;
 	tmp->last = tmp->philo->t;
 	pthread_create(&pthread, NULL, check_death, tmp);
 	if (tmp->id % 2 == 0)
@@ -67,7 +65,10 @@ void	*life_philo(t_life *tmp)
 	while (1)
 	{
 		if (tmp->philo->times != -1 && k == tmp->philo->times)
+		{
 			sem_post(tmp->death);
+			exit();
+		}
 		if (tmp->philo->times != -1)
 			k++;
 		philo_eat(tmp);
@@ -112,11 +113,11 @@ int	main(int argc, char **argv)
 	init_life(life, phil);
 	exec_philo(life);
 	sem_wait(life->death);
-	sem_unlink("death");
-	sem_unlink("text");
-	sem_unlink("fork");
 	while (i < phil->num)
+	{
 		kill(life[i].pid, 9);
+		i++;
+	}
 	free(phil);
 	free(life);
 	return (0);

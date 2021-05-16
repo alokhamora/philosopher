@@ -23,7 +23,7 @@
 typedef struct s_philo
 {
 	int				num;
-	unsigned long	die;
+	int 			die;
 	int				eat;
 	int				sleep;
 	int				times;

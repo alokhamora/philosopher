@@ -27,9 +27,6 @@ int	free_all(t_life *life)
 	int i;
 
 	i = 0;
-	pthread_mutex_destroy(life->text);
-	pthread_mutex_destroy(life->death);
-	pthread_mutex_destroy(life->pfork);
 	while(i < life->philo->num)
 	{
 		pthread_mutex_destroy(&(life[i]).eat);

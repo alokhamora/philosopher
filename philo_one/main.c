@@ -6,7 +6,7 @@
 /*   By: mchaya <mchaya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/22 11:09:12 by mchaya            #+#    #+#             */
-/*   Updated: 2021/05/11 16:49:24 by mchaya           ###   ########.fr       */
+/*   Updated: 2021/05/16 11:54:42 by mchaya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	*check_death(void *tmp)
 	{
 		usleep(100);
 		pthread_mutex_lock(&life->eat);
-		if (current_time() - life->last >= life->philo->die)
+		if (current_time() - life->last >= (unsigned int)life->philo->die)
 		{
 			pthread_mutex_lock(life->text);
 			printf("%ld %d died\n", current_time() - life->philo->t, life->id);
@@ -77,7 +77,10 @@ void	*life_philo(void *life)
 	while (1)
 	{
 		if (tmp->philo->times != -1 && k == tmp->philo->times)
+		{
 			pthread_mutex_unlock(tmp->death);
+			return NULL;
+		}
 		if (tmp->philo->times != -1)
 			k++;
 		philo_eat(tmp);

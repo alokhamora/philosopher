@@ -6,7 +6,7 @@
 /*   By: mchaya <mchaya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 14:40:53 by mchaya            #+#    #+#             */
-/*   Updated: 2021/05/12 16:45:59 by mchaya           ###   ########.fr       */
+/*   Updated: 2021/05/16 11:06:56 by mchaya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 typedef struct s_philo
 {
 	int				num;
-	unsigned long	die;
+	int 			die;
 	int				eat;
 	int				sleep;
 	int				times;

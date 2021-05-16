@@ -6,7 +6,7 @@
 #    By: mchaya <mchaya@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/22 11:14:15 by mchaya            #+#    #+#              #
-#    Updated: 2021/05/10 14:54:02 by mchaya           ###   ########.fr        #
+#    Updated: 2021/05/16 11:39:13 by mchaya           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,11 +20,11 @@ OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
+$(NAME): $(OBJS) philo_one.h
 	gcc $(CFLAGS) $(OBJS) -o $(NAME)
 
 clean:
-	rm $(OBJS)
+	-rm $(OBJS)
 
 fclean: clean
 	rm $(NAME)
