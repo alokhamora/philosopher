@@ -6,7 +6,7 @@
 /*   By: mchaya <mchaya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/22 11:09:12 by mchaya            #+#    #+#             */
-/*   Updated: 2021/05/16 11:54:42 by mchaya           ###   ########.fr       */
+/*   Updated: 2021/05/18 14:12:30 by mchaya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	*check_death(void *tmp)
 	{
 		usleep(100);
 		pthread_mutex_lock(&life->eat);
-		if (current_time() - life->last >= (unsigned int)life->philo->die)
+		if (current_time() - life->last >= life->philo->die)
 		{
 			pthread_mutex_lock(life->text);
 			printf("%ld %d died\n", current_time() - life->philo->t, life->id);
@@ -76,14 +76,11 @@ void	*life_philo(void *life)
 		ft_usleep(10);
 	while (1)
 	{
-		if (tmp->philo->times != -1 && k == tmp->philo->times)
-		{
-			pthread_mutex_unlock(tmp->death);
-			return NULL;
-		}
+		philo_eat(tmp);
 		if (tmp->philo->times != -1)
 			k++;
-		philo_eat(tmp);
+		if (tmp->philo->times != -1 && k == tmp->philo->times)
+			unlock_death(tmp);
 		pthread_mutex_lock(tmp->text);
 		printf("%ld %d is sleeping\n", current_time() - tmp->philo->t, tmp->id);
 		pthread_mutex_unlock(tmp->text);
@@ -116,7 +113,9 @@ int	main(int argc, char **argv)
 	pthread_mutex_t	*death;
 	pthread_mutex_t	*text;
 	t_life			*life;
+	int				k;
 
+	k = 0;
 	phil = malloc(sizeof(t_philo));
 	if (init_argv(phil, argv, argc) < 0)
 		return (exit_err("Error: wrong argument\n"));
@@ -127,6 +126,7 @@ int	main(int argc, char **argv)
 	pthread_mutex_lock(death);
 	text = malloc(sizeof (pthread_mutex_t));
 	pthread_mutex_init(text, NULL);
+	life->check = &k;
 	init_life(life, phil, death, text);
 	exec_philo(life);
 	pthread_mutex_lock(death);

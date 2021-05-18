@@ -6,7 +6,7 @@
 /*   By: mchaya <mchaya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/07 17:26:54 by mchaya            #+#    #+#             */
-/*   Updated: 2021/05/10 14:16:04 by mchaya           ###   ########.fr       */
+/*   Updated: 2021/05/17 18:41:48 by mchaya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 typedef struct s_philo
 {
 	int				num;
-	int				die;
+	unsigned long	die;
 	int				eat;
 	int				sleep;
 	int				times;
@@ -32,6 +32,7 @@ typedef struct s_philo
 typedef struct s_life
 {
 	int				id;
+	int				*check;
 	t_philo			*philo;
 	pthread_mutex_t	*pfork;
 	unsigned long	last;
@@ -40,6 +41,7 @@ typedef struct s_life
 	pthread_mutex_t	*text;
 }				t_life;
 
+void			unlock_death(t_life *tmp);
 int				ft_strlen(const char *s);
 int				str_to_int(char *str);
 void			init_life(t_life *life, t_philo *phil, pthread_mutex_t *death,

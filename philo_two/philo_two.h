@@ -6,7 +6,7 @@
 /*   By: mchaya <mchaya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 14:40:53 by mchaya            #+#    #+#             */
-/*   Updated: 2021/05/16 15:28:15 by mchaya           ###   ########.fr       */
+/*   Updated: 2021/05/18 14:30:57 by mchaya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,10 @@ typedef struct s_life
 	sem_t			*pfork;
 	sem_t			*death;
 	sem_t			*text;
+	int				*check;
 }				t_life;
 
+void			unlock_death(t_life *tmp);
 int				ft_strlen(const char *s);
 int				str_to_int(char *str);
 int				free_all(t_life *life);

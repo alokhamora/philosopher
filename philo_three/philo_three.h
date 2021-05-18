@@ -6,7 +6,7 @@
 /*   By: mchaya <mchaya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 14:40:53 by mchaya            #+#    #+#             */
-/*   Updated: 2021/05/16 11:06:56 by mchaya           ###   ########.fr       */
+/*   Updated: 2021/05/18 16:19:44 by mchaya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 typedef struct s_philo
 {
 	int				num;
-	int 			die;
+	int				die;
 	int				eat;
 	int				sleep;
 	int				times;
@@ -38,10 +38,10 @@ typedef struct s_life
 	t_philo			*philo;
 	unsigned long	last;
 	sem_t			*pfork;
-	sem_t			*death;
 	sem_t			*text;
 }				t_life;
 
+int				free_all(t_life *life);
 int				ft_strlen(const char *s);
 int				str_to_int(char *str);
 int				free_all(t_life *life);

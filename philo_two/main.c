@@ -6,7 +6,7 @@
 /*   By: mchaya <mchaya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 14:41:32 by mchaya            #+#    #+#             */
-/*   Updated: 2021/05/16 15:36:00 by mchaya           ###   ########.fr       */
+/*   Updated: 2021/05/18 14:38:03 by mchaya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,7 @@ void	*life_philo(void *life)
 	while (1)
 	{
 		if (tmp->philo->times != -1 && k == tmp->philo->times)
-		{
-			sem_post(tmp->death);
-			//return NULL;
-		}
+			unlock_death(tmp);
 		if (tmp->philo->times != -1)
 			k++;
 		philo_eat(tmp);
@@ -104,12 +101,15 @@ int	main(int argc, char **argv)
 {
 	t_philo	*phil;
 	t_life	*life;
+	int		k;
 
+	k = 0;
 	phil = malloc(sizeof(t_philo));
 	if (init_argv(phil, argv, argc) < 0)
 		return (exit_err("Error: wrong argument\n"));
 	phil->t = current_time();
 	life = malloc(sizeof(t_life) * phil->num);
+	life->check = &k;
 	init_life(life, phil);
 	exec_philo(life);
 	sem_wait(life->death);

@@ -6,7 +6,7 @@
 /*   By: mchaya <mchaya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/12 18:21:26 by mchaya            #+#    #+#             */
-/*   Updated: 2021/05/12 18:21:26 by mchaya           ###   ########.fr       */
+/*   Updated: 2021/05/18 14:45:04 by mchaya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int	str_to_int(char *str)
 			return (-1);
 		i++;
 	}
+	if (k > 2147483647)
+		return (-1);
 	return (k);
 }
 
@@ -43,8 +45,8 @@ int	init_argv(t_philo *phil, char **argv, int argc)
 	phil->die = (unsigned long)str_to_int(argv[2]);
 	phil->eat = str_to_int(argv[3]);
 	phil->sleep = str_to_int(argv[4]);
-	if (phil->num < 2 || phil->sleep <= 0 || phil->eat <= 0 || phil->die
-															   <= 0 || (argc == 6 && phil->times <= 0))
+	if (phil->num < 2 || phil->sleep <= 0 || phil->eat <= 0 || (int)phil->die
+		<= 0 || (argc == 6 && phil->times <= 0))
 		return (-1);
 	return (1);
 }

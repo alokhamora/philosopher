@@ -6,7 +6,7 @@
 /*   By: mchaya <mchaya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/12 18:19:38 by mchaya            #+#    #+#             */
-/*   Updated: 2021/05/16 12:23:34 by mchaya           ###   ########.fr       */
+/*   Updated: 2021/05/18 16:46:11 by mchaya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,9 @@ void	*check_death(void *tmp)
 		{
 			sem_wait(life->text);
 			printf("%ld %d died\n", current_time() - life->philo->t, life->id);
-			sem_post(life->death);
-			break ;
+			exit(0);
 		}
 	}
-	return (NULL);
 }
 
 void	philo_eat(t_life *tmp)
@@ -65,10 +63,7 @@ void	life_philo(t_life *tmp)
 	while (1)
 	{
 		if (tmp->philo->times != -1 && k == tmp->philo->times)
-		{
-			sem_post(tmp->death);
-			exit();
-		}
+			exit(1);
 		if (tmp->philo->times != -1)
 			k++;
 		philo_eat(tmp);
@@ -102,9 +97,9 @@ int	main(int argc, char **argv)
 {
 	t_philo	*phil;
 	t_life	*life;
-	int i;
+	int		i;
+	int		stat;
 
-	i = 0;
 	phil = malloc(sizeof(t_philo));
 	if (init_argv(phil, argv, argc) < 0)
 		return (exit_err("Error: wrong argument\n"));
@@ -112,16 +107,16 @@ int	main(int argc, char **argv)
 	life = malloc(sizeof(t_life) * phil->num);
 	init_life(life, phil);
 	exec_philo(life);
-	sem_wait(life->death);
-	while (i < phil->num)
+	i = 0;
+	while (1)
 	{
-		kill(life[i].pid, 9);
-		i++;
+		waitpid(-1, &stat, 0);
+		if (stat == 1)
+			i++;
+		else if (stat == 0)
+			break ;
+		if (i == phil->num)
+			break ;
 	}
-	sem_unlink("death");
-	sem_unlink("text");
-	sem_unlink("fork");
-	free(phil);
-	free(life);
-	return (0);
+	return (free_all(life));
 }

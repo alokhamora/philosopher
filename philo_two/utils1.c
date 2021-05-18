@@ -6,7 +6,7 @@
 /*   By: mchaya <mchaya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 13:28:25 by mchaya            #+#    #+#             */
-/*   Updated: 2021/05/16 11:06:56 by mchaya           ###   ########.fr       */
+/*   Updated: 2021/05/18 16:48:45 by mchaya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,13 @@ int	ft_strlen(const char *s)
 	while (*s++ != '\0')
 		i++;
 	return (i);
+}
+
+void	unlock_death(t_life *tmp)
+{
+	*(tmp->check) = *(tmp->check) + 1;
+	if (*tmp->check == tmp->philo->num)
+		sem_post(tmp->death);
 }
 
 void	init_life(t_life *life, t_philo *phil)
@@ -43,6 +50,7 @@ void	init_life(t_life *life, t_philo *phil)
 		life[i].death = death;
 		life[i].text = text;
 		life[i].pfork = pfork;
+		life[i].check = life[0].check;
 		i++;
 	}
 }

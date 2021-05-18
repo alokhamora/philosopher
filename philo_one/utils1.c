@@ -24,14 +24,13 @@ int	ft_strlen(const char *s)
 
 int	free_all(t_life *life)
 {
-	int i;
+	int	i;
 
 	i = 0;
-
 	pthread_mutex_destroy(life->death);
 	pthread_mutex_destroy(life->text);
 	pthread_mutex_destroy(life->pfork);
-	while(i < life->philo->num)
+	while (i < life->philo->num)
 	{
 		pthread_mutex_destroy(&(life[i]).eat);
 		i++;
@@ -39,6 +38,13 @@ int	free_all(t_life *life)
 	free(life->philo);
 	free(life);
 	return (0);
+}
+
+void	unlock_death(t_life *tmp)
+{
+	*(tmp->check) = *(tmp->check) + 1;
+	if (*tmp->check == tmp->philo->num)
+		pthread_mutex_unlock(tmp->death);
 }
 
 void	init_life(t_life *life, t_philo *phil, pthread_mutex_t *death,
@@ -57,6 +63,7 @@ void	init_life(t_life *life, t_philo *phil, pthread_mutex_t *death,
 		life[i].pfork = p_fork;
 		life[i].death = death;
 		life[i].text = text;
+		life[i].check = life[0].check;
 		pthread_mutex_init(&life[i].eat, NULL);
 		i++;
 	}
